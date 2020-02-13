@@ -1,0 +1,132 @@
+/* menu btn */
+:root {
+    --btn_width: 60px;
+    --btn_space: 10px;
+    /* btn1_right & btn2_right moved by js */
+    --btn1_right: -300px;
+    --btn2_right: -300px;
+
+    --window_height: 90vh;
+}
+
+#cht_wrap #cht_input_ui #cht_btn_grp1 {
+    position: fixed;
+    /* --input_height is global used by js*/
+    bottom: calc(var(--input_height, 50px) + var(--btn_space));
+    right: calc(var(--btn_space) + var(--btn1_right));
+    transition: right 1s;
+    display: none;
+
+    font-size: 0;
+    opacity: 0.8;
+    border: 0;
+}
+
+#cht_wrap #cht_input_ui #cht_btn_grp2 {
+    position: fixed;
+    bottom: calc(var(--input_height, 50px) * 2 + var(--btn_space) * 3);
+    right: calc(var(--btn_space) + var(--btn2_right));
+    transition: right 1s;
+    display: none;
+
+    font-size: 0;
+    opacity: 0.8;
+    border: 0;
+}
+
+#cht_wrap #cht_input_ui #cht_btn_grp1 .cht_input_btn,
+#cht_wrap #cht_input_ui #cht_btn_grp2 .cht_input_btn {
+    background-color: #333;
+    color: #eee;
+    width: var(--btn_width);
+    height: var(--btn_width);
+    border-radius: calc(var(--btn_width) / 4);
+    text-align: center;
+    margin: 0 calc(var(--btn_space) / 2);
+    vertical-align: top;
+
+    display: inline-block;
+    border: 0;
+}
+
+#cht_wrap #cht_input_ui .cht_input_btn i {
+    font-size: 30px;
+    color: inherit;
+    padding-top: 15px;
+    border: 0;
+}
+
+#cht_wrap #cht_input_ui .cht_input_btn p {
+    font-size: 30px;
+    color: inherit;
+    padding-top: calc((60px - 36px)/2);
+    border: 0;
+}
+
+#cht_wrap #cht_input_ui .cht_input_btn img {
+    box-sizing: content-box;
+    height: 30px;
+    border: 0;
+    padding-top: 15px;
+}
+
+#cht_wrap #cht_input_ui #cht_user_list {
+    --temp_height: calc(var(--input_height) + var(--btn_width) + var(--btn_space) * 3);
+    --temp_width: calc(var(--btn_width) * 3 + var(--btn_space) * 4);
+    position: fixed;
+    width: var(--temp_width);
+    height: calc(var(--window_height) - var(--title_height) - var(--temp_height));
+    top: calc(var(--title_height) + var(--btn_space));
+    right: calc(var(--temp_width) * -1);
+    transition: right 1s;
+    background-color: #eee;
+    border: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    font-family: 'Patua One', 'Godo', sans-serif;
+}
+
+#cht_wrap #cht_input_ui #cht_user_list h2 {
+    margin: 10px;
+    margin-left: 20px;
+    border: 0;
+}
+
+#cht_wrap #cht_input_ui #cht_user_list #user_list_box {
+    --temp01: calc(var(--window_height) - var(--title_height) - var(--temp_height));
+    height: calc(var(--temp01) - 60px);
+    overflow: auto;
+    border: 0;
+}
+
+#cht_wrap #cht_input_ui #cht_user_list #user_list_box .user_item {
+    height: 60px;
+    cursor: pointer;
+    border: 0;
+}
+
+#cht_wrap #cht_input_ui #cht_user_list #user_list_box .user_item img {
+    float: left;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    margin: 10px;
+    border: 0;
+}
+
+#cht_wrap #cht_input_ui #cht_user_list #user_list_box .user_item p {
+    float: left;
+    height: 40px;
+    margin: 10px 0;
+    line-height: 40px;
+    border: 0;
+}
+
+
+@media screen and (orientation: portrait) {
+    #wrap {}
+}
+
+@media screen and (orientation: landscape) {
+    #wrap {}
+}

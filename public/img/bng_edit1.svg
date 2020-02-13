@@ -1,0 +1,20 @@
+<svg preserveAspectRatio="none" id="그룹_37" data-name="그룹 37" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="568" height="568" viewBox="0 0 568 568">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#c69ef2"/>
+      <stop offset="1" stop-color="#809ccc" stop-opacity="0.588"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#f94060" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#ff2a2a" stop-opacity="0.42"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#7a83ff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#100273" stop-opacity="0.22"/>
+    </linearGradient>
+  </defs>
+  <rect id="사각형_55" data-name="사각형 55" width="568" height="568" fill="#eee"/>
+  <path id="패스_23" data-name="패스 23" d="M1269,2777h568V2427.021l-568,225.844Z" transform="translate(-1269 -2209)" fill="url(#linear-gradient)"/>
+  <path id="패스_25" data-name="패스 25" d="M1878.23,2600.108H1485.82v-334.1Z" transform="translate(-1485.82 -2032.108)" fill="url(#linear-gradient-2)"/>
+  <path id="패스_24" data-name="패스 24" d="M1485.82,2777H1837V2266.011Z" transform="translate(-1269 -2209)" fill="url(#linear-gradient-3)"/>
+</svg>

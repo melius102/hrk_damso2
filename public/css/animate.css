@@ -1,0 +1,77 @@
+@keyframes log_logo_img_show {
+    from {
+        height: 20%;
+        /* 5 */
+        top: 150%;
+        right: 48%;
+        transform: translate(50%, -100%);
+    }
+
+    20% {
+        /* logo arrived */
+        height: 20%;
+        /* 5 */
+        top: 49%;
+        /* 10 + 5 */
+        right: 48%;
+    }
+
+    58% {
+        /* logo start */
+        height: 20%;
+        /* 5 */
+        top: 49%;
+        /* 10 + 5 */
+        right: 48%;
+        transform: translate(50%, -100%);
+    }
+
+    80% {
+        height: 8%;
+        /* 5 */
+        top: 2%;
+        /* 1 */
+        right: calc(var(--varh, 1vh) * 2);
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes log_logo_txt_show {
+    from {
+        opacity: 0;
+        top: 47%;
+    }
+
+    18% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 0;
+        top: 47%;
+    }
+}
+
+@keyframes show_up {
+    from {
+        opacity: 0;
+    }
+
+    80% {
+        opacity: 0;
+    }
+}
+
+@keyframes log_login_input_show {
+    from {
+        width: 0;
+    }
+
+    90% {
+        width: 0;
+    }
+}

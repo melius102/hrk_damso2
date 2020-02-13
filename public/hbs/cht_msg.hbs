@@ -1,0 +1,34 @@
+{{!-- system_msg --}}
+<div id="msg_last" class="cht_msg_box clearfix main_font {{user}}">
+    <img class="cht_msg_img" src="img/blank.svg" style="background-color: {{color}};">
+    <p class="cht_msg_txt">
+        {{msg}} <span style="background-color: {{user_color}};"> {{user_id}} </span>
+    </p>
+</div>
+
+
+{{!-- user_msg --}}
+<div id="msg_last" class="cht_msg_box clearfix {{user}}">
+    <img class="cht_msg_img" src="img/blank.svg" style="background-color: {{color}};">
+    <p class="cht_msg_txt" style="border-color: {{user_color}};">
+        {{!-- {{{msg}}} --}}
+        {{breaklines msg}}
+    </p>
+</div>
+
+
+{{!-- translated_msg --}}
+<div id="msg_last" class="cht_msg_box clearfix {{user}}">
+    <img class="cht_msg_img" src="img/blank.svg" style="background-color: {{color}};">
+    <div class="cht_msg_txt" style="border-color: {{user_color}};">
+        {{breaklines msg_src}}
+        <hr style="border-color: {{user_color}};" /> {{breaklines msg_target}}
+    </div>
+</div>
+
+
+{{!-- user_item --}}
+<div class="user_item clearfix" data-userid="{{user_id}}">
+    <img src="img/blank.svg" style="background-color: {{color}};">
+    <p>{{user_name}}</p>
+</div>

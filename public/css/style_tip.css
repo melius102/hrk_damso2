@@ -1,0 +1,37 @@
+/* centering div image with shadow */
+/* div > div > img */
+#logo_app_div {
+    margin: 0 auto;
+    text-align: center;    
+}
+
+#logo_app_div #logo_app {
+    display: inline-block;
+    box-shadow: 4px 4px 10px black;
+    border-radius: 8px;
+}
+
+#logo_app_div #logo_app img {
+    display: block;
+}
+
+/* centering input and image vertically*/
+/* div > div > input + img */
+#cht_wrap #input_ui {
+    display: table;
+}
+
+#cht_wrap #input_ui #input_box {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#cht_wrap #input_ui #input_box input {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#cht_wrap #input_ui #input_box img {
+    display: inline-block;
+    vertical-align: middle;
+}

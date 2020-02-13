@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>damso</title>
+    <link rel="stylesheet" type="text/css" href="css/style_log.css">
+    <link rel="stylesheet" type="text/css" href="css/style_cht.css">
+    <link rel="stylesheet" type="text/css" href="css/style_btn.css">
+    <link rel="stylesheet" type="text/css" href="css/animate.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.1/handlebars.js"></script>
+    <script src="https://kit.fontawesome.com/a427fd7f5c.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <!-- <script src="js/socket.io.js"></script> -->
+    <script src="hbs/cht_msg.js"></script>
+    <script src="js/script_man.js"></script>
+    <script src="js/script_sck.js"></script>
+    <script src="js/script_mic.js"></script>
+</head>
+
+<body>
+    <!-- loging part -->
+    <!-- <form id="wrap" name="frm"> -->
+    <div id="log_wrap">
+        <div id="log_logo">
+            <img id="log_logo_r" src="img/big_logo_em.svg">
+            <h1>j. rafahel park</h1>
+            <img id="log_logo_a" class="show_up" src="img/app_logo_e.svg">
+        </div>
+        <!-- <form id="log_login_input" class="show_up" name="frm"> -->
+        <div id="log_login_input" class="show_up">
+            <table>
+                <tr>
+                    <td><img src="img/Icon simple-glassdoor.svg"></td>
+                    <td><input id="log_input_room" type="text" name="room_no" placeholder="Room No."></td>
+                </tr>
+                <tr>
+                    <td><img src="img/Icon awesome-id-badge.svg"></td>
+                    <td><input id="log_input_user" type="text" name="user_id" placeholder="User ID"></td>
+                </tr>
+                <tr>
+                    <td><img src="img/Icon ionic-md-key.svg"></td>
+                    <td><input id="log_input_pw" type="password" name="passkey"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="log_login_btn" class="show_up">
+            <button id="log_btn_enter">Enter Lobby</button>
+            <button id="log_btn_join">Sign up</button>
+            <div id="log_btn_social">
+                <i class="fab fa-google"></i>
+                <i class="fab fa-facebook-square"></i>
+                <i class="fab fa-twitter-square"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- chatting part -->
+    <div id="cht_wrap">
+        <div id="cht_bgnd_img">
+            <img src="img/bng_edit2.svg">
+            <h1 class="main_font">damso</h1>
+        </div>
+        <div id="cht_title">
+            <h1 id="cht_room_no" class="main_font">room no. 123</h1>
+        </div>
+        <div id="cht_msg_win">
+        </div>
+        <div id="cht_input_ui">
+            <div id='cht_input_box'>
+                <div id="cht_input_text">
+                    <textarea id="cht_input_textarea" rows="1" placeholder="ds::help"></textarea>
+                </div>
+                <div id="cht_input_img">
+                    <img id="cht_input_send" src="img/Icon awesome-arrow-square.svg">
+                    <img id="cht_input_plus" src="img/Icon awesome-plus-square.svg">
+                </div>
+            </div>
+            <div id="cht_btn_grp1">
+                <div id="cht_input_file" class="cht_input_btn">
+                    <i class="far fa-file"></i>
+                </div>
+                <div id="cht_input_mic" class="cht_input_btn">
+                    <i class="fas fa-microphone"></i>
+                </div>
+                <div id="cht_input_trans" class="cht_input_btn">
+                    <p class="main_font">En</p>
+                    <!-- <i class="fas fa-sync-alt"></i> -->
+                </div>
+                <div id="cht_input_out" class="cht_input_btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <!-- <img src="img/Icon feather-log-out.svg"> -->
+                </div>
+            </div>
+            <div id="cht_btn_grp2">
+                <div id="cht_input_btn21" class="cht_input_btn">
+                    <p class="main_font"></p>
+                    <!-- <img src="img/Icon feather-log-out.svg"> -->
+                </div>
+                <div id="cht_input_btn22" class="cht_input_btn">
+                    <p class="main_font"></p>
+                    <!-- <i class="fas fa-sync-alt"></i> -->
+                </div>
+                <div id="cht_input_btn23" class="cht_input_btn">
+                    <p class="main_font"></p>
+                    <!-- <i class="fas fa-sync-alt"></i> -->
+                </div>
+            </div>
+            <div id="cht_user_list">
+                <h2>User List</h2>
+                <div id="user_list_box">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- audio part -->
+    <audio controls autoplay id="remote_audio" style="display: none;"></audio>
+    <audio controls autoplay muted id="local_audio" style="display: none;"></audio>
+</body>
+
+</html>
