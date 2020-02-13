@@ -99,6 +99,8 @@ function hideViewport(flag) {
     }
 }
 
+let roomNo;
+
 function initialization_log() {
     if (start_angle == 0) { // all for desktop & portrait for mobile
         hideViewport(false);
@@ -109,6 +111,12 @@ function initialization_log() {
     }
 
     log_btn_enter.onclick = function () {
+        roomNo = log_input_room.value;
+        log_input_room.value = "";
+        if (!roomNo) {
+            alert('Please fill the room number.');
+            return;
+        }
         log_wrap.style.display = "none";
         cht_wrap.style.display = "block";
 
@@ -118,17 +126,14 @@ function initialization_log() {
 
         document.documentElement.style.setProperty('--intro_time', `0s`);
         updateViewport("device-width", "device-height", false);
-        connect_socket(log_input_room.value);
-        log_input_room.value = "";
-
-        // if (rdev) toggleUserList();
+        connect_socket(roomNo);
     };
 
     $('#log_input_room').on('input', function () {
         if (log_input_room.value) {
             log_btn_enter.innerHTML = "Enter Room";
         } else {
-            log_btn_enter.innerHTML = "Enter Lobby";
+            log_btn_enter.innerHTML = "Enter Room"; // "Enter Lobby" 
         }
     });
 }

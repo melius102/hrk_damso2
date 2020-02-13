@@ -128,9 +128,12 @@ form {
     font-size: 0;
     text-align: center;
     border-collapse: collapse;
-    margin-top: calc(var(--varh, 1vh) * 1.56);
     /* 0.5/32 */
     border: 0;
+}
+
+#log_wrap #log_login_input table#log_input_table_enable {
+    margin-top: calc(var(--varh, 1vh) * 1.56);
 }
 
 #log_wrap #log_login_input table td {
@@ -155,6 +158,10 @@ form {
     border-bottom: 1px solid #333;
     animation: log_login_input_show var(--intro_time) ease;
     text-align: center;
+}
+
+#log_wrap #log_login_input table#log_input_table_disable input {
+    width: 0;
 }
 
 #log_wrap #log_login_input input::placeholder {

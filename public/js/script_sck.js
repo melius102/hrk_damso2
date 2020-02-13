@@ -2,12 +2,10 @@ let mysock;
 let socks = [];
 let scMap = new Map();
 let sys_color = [192, 192, 192];
-let roomNo;
 
 function connect_socket(room_no) {
-    roomNo = room_no;
-    if (roomNo) {
-        cht_room_no.innerHTML = `Room No. ${roomNo}`;
+    if (room_no) {
+        cht_room_no.innerHTML = `Room No. ${room_no}`;
     } else {
         cht_room_no.innerHTML = `Lobby`;
     }
