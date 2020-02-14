@@ -12,8 +12,9 @@ const { help_text, cmd_list_text } = require('./modules/help-text');
 
 const app = express();
 // const router = express.Router();
-const port = process.env.PORT || 3000; // for heroku
-const localhost = '192.168.0.64';
+const port = process.env.PORT || 8080; // for heroku
+// const localhost = '192.168.0.64';
+const localhost = '120.142.105.239';
 
 app.set('port', port);
 

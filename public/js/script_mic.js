@@ -80,7 +80,32 @@ let peerConnection;
 
 async function createPeerConnection() {
     if (peerConnection) return;
-    peerConnection = new RTCPeerConnection();
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection
+    const configuration = {
+        // https://developer.mozilla.org/en-US/docs/Web/API/RTCIceServer
+        iceServers: [
+            {
+                // urls: "stun:stun.l.google.com:19302" // fail
+                urls: [
+                    "stun:stun.l.google.com:19302", // fail
+                    "stun:stun1.l.google.com:19302",
+                    "stun:stun2.l.google.com:19302",
+                    "stun:stun3.l.google.com:19302",
+                    "stun:stun4.l.google.com:19302",
+                    "stun:stun5.l.google.com:19302",
+                    "stun:stun1.voiceeclipse.net", // fail
+                    "stun:stun.callwithus.com", // fail
+                    "stun:stun.counterpath.net", // fail
+                    "stun:stun.sipgate.net:10000", // fail
+                    "stun:stun.stunprotocol.org", // fail
+                    "stun:stun.internetcalls.com"
+                ]
+            }
+        ]
+    }
+    peerConnection = new RTCPeerConnection(configuration);
+    // peerConnection = new RTCPeerConnection();
 
     peerConnection.onicecandidate = function (evt) {
         console.log('on icecandidate');

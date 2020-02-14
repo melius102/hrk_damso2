@@ -112,6 +112,7 @@ function initialization_log() {
 
     log_btn_enter.onclick = function () {
         roomNo = log_input_room.value;
+        if (rdev) roomNo = "123";
         log_input_room.value = "";
         if (!roomNo) {
             alert('Please fill the room number.');
