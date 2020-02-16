@@ -131,9 +131,10 @@ function connectToServer() {
             }
 
             createPeerConnection();
-            await getUserMedia(true);
-
+            // firstly, need to get offer
             await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+
+            await getUserMedia(true);
             const answer = await peerConnection.createAnswer();
             await peerConnection.setLocalDescription(new RTCSessionDescription(answer));
 
@@ -156,6 +157,7 @@ function connectToServer() {
         } else if (data.cmd == 'rtcCandidate') {
             console.log("on rtcCandidate");
             try {
+                console.log(data.candidate);
                 await peerConnection.addIceCandidate(data.candidate);
             } catch (err) {
                 console.error(err);

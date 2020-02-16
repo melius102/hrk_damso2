@@ -86,21 +86,28 @@ async function createPeerConnection() {
         // https://developer.mozilla.org/en-US/docs/Web/API/RTCIceServer
         iceServers: [
             {
-                // urls: "stun:stun.l.google.com:19302" // fail
+                // turn server list
+                // https://gist.github.com/sagivo/3a4b2f2c7ac6e1b5267c2f1f59ac6c6b
+                // Trickle ICE
+                // https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
+
                 urls: [
-                    "stun:stun.l.google.com:19302", // fail
+                    "stun:stun.l.google.com:19302",
                     "stun:stun1.l.google.com:19302",
                     "stun:stun2.l.google.com:19302",
                     "stun:stun3.l.google.com:19302",
                     "stun:stun4.l.google.com:19302",
-                    "stun:stun5.l.google.com:19302",
-                    "stun:stun1.voiceeclipse.net", // fail
-                    "stun:stun.callwithus.com", // fail
-                    "stun:stun.counterpath.net", // fail
-                    "stun:stun.sipgate.net:10000", // fail
-                    "stun:stun.stunprotocol.org", // fail
+                    "stun:stun.callwithus.com",
+                    "stun:stun.counterpath.net",
+                    "stun:stun.sipgate.net",
+                    "stun:stun.stunprotocol.org",
                     "stun:stun.internetcalls.com"
                 ]
+            },
+            {
+                urls: 'turn:numb.viagenie.ca',
+                credential: 'muazkh',
+                username: 'webrtc@live.com'
             }
         ]
     }
@@ -113,6 +120,7 @@ async function createPeerConnection() {
             let candidate = evt.candidate;
             mysock.emit("webrtc", { cmd: "rtcCandidate", candidate, to: targetRTC });
             console.log("emit rtcCandidate");
+            console.log(candidate);
         }
     }
 
