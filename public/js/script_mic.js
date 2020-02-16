@@ -103,12 +103,12 @@ async function createPeerConnection() {
                     "stun:stun.stunprotocol.org",
                     "stun:stun.internetcalls.com"
                 ]
-            },
-            {
-                urls: 'turn:numb.viagenie.ca',
-                credential: 'muazkh',
-                username: 'webrtc@live.com'
             }
+            // , {
+            //     urls: 'turn:numb.viagenie.ca',
+            //     credential: 'muazkh',
+            //     username: 'webrtc@live.com'
+            // }
         ]
     }
     peerConnection = new RTCPeerConnection(configuration);
