@@ -11,7 +11,13 @@ const { translation_google } = require('./modules/google-trans');
 const { help_text, cmd_list_text } = require('./modules/help-text');
 const { pool, sqlErr } = require('./modules/mysql-conn');
 
+// mongoose
+const connect = require('./schemas');
+const Message = require('./schemas/message');
+
 const app = express();
+connect();
+
 // const router = express.Router();
 const port = process.env.PORT || 8080; // for heroku
 // const localhost = '192.168.0.64';
@@ -151,6 +157,9 @@ io.sockets.on('connection', function (socket) {
             packet.msg.src = textareaCMDParser(packet.msg.src.substring(4));
             socket.emit('message', packet);
         } else {
+            if (packet.room_no == "developer") {
+                addMessage(socket.id, packet.msg.src);
+            }
             if (packet.msg.trans.flag) {
                 translation_machine(packet.msg.trans.src, packet.msg.trans.target, packet.msg.src, function (res_text) {
                     packet.msg.target = res_text;
@@ -192,6 +201,15 @@ io.sockets.on('connection', function (socket) {
     }); // end of socket.on('webrtc')
 });
 
+// mongoose add record
+function addMessage(writer, msg) {
+    if (typeof msg == 'string') {
+        msg = msg.substring(0, 1000);
+        const message = new Message({ writer, message: msg });
+        message.save().then(result => console.log(result))
+            .catch(err => console.error(err));
+    }
+}
 
 // webrtc iceServers
 let iceServers = [];
