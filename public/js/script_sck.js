@@ -28,7 +28,7 @@ function connectToServer() {
     mysock = io.connect(url, options);
     */
 
-    // let url = 'https://melius-chat.herokuapp.com';
+    // let url = 'https://damso.herokuapp.com';
     // mysock = io.connect(url);
     mysock = io(); // for html from public folder of server
 
@@ -130,7 +130,7 @@ function connectToServer() {
                 }
             }
 
-            createPeerConnection();
+            createPeerConnection({ iceServers: mysock.servers });
             // firstly, need to get offer
             await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
 
@@ -164,6 +164,8 @@ function connectToServer() {
             }
         } else if (data.cmd == 'rtcClose') {
             closeCall();
+        } else if (data.cmd == 'rtcServers') {
+            mysock.servers = data.rtcServers;
         }
     });
 }

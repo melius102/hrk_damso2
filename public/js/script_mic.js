@@ -61,7 +61,7 @@ function showUsersHbs(user, hbs_tmpl) {
     $('#user_list_box').append(html_data);
     $('#user_list_box').children().last().click(async function (evt) {
         if ($(this).data("userid") != mysock.id) {
-            createPeerConnection();
+            createPeerConnection({ iceServers: mysock.servers });
 
             await getUserMedia(true);
             micIconDisplay(1);
@@ -78,47 +78,11 @@ function showUsersHbs(user, hbs_tmpl) {
 
 let peerConnection;
 
-async function createPeerConnection() {
+async function createPeerConnection(configuration) {
     if (peerConnection) return;
 
     // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection
-    const configuration = {
-        // https://developer.mozilla.org/en-US/docs/Web/API/RTCIceServer
-        iceServers: [
-            {
-                // turn server list
-                // https://gist.github.com/sagivo/3a4b2f2c7ac6e1b5267c2f1f59ac6c6b
-                // Trickle ICE
-                // https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
-
-                // Using five or more STUN/TURN servers causes problems
-                // from apprtc
-                urls: [
-                    "stun:74.125.23.127:19302",
-                    "stun:[2404:6800:4008:c02::7f]:19302",
-                    "stun:stun.l.google.com:19302"
-                ]
-            }
-            // , {
-            //     urls: 'turn:numb.viagenie.ca',
-            //     credential: 'muazkh',
-            //     username: 'webrtc@live.com'
-            // }
-            , {
-                urls: [
-                    "turn:74.125.23.127:19305?transport=udp",
-                    "turn:[2404:6800:4008:c02::7f]:19305?transport=udp",
-                    "turn:74.125.23.127:19305?transport=tcp",
-                    "turn:[2404:6800:4008:c02::7f]:19305?transport=tcp"
-                ],
-                username: "CIGYrvIFEgbr99K+2P4Yzc/s6OMTIICjBQ",
-                credential: "AOWLKqz+lcTJShJjxCkCq1l9648=",
-            }
-        ]
-    }
-
     peerConnection = new RTCPeerConnection(configuration);
-    // peerConnection = new RTCPeerConnection();
 
     peerConnection.onicecandidate = function (evt) {
         console.log('on icecandidate');

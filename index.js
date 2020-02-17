@@ -9,6 +9,7 @@ const { translation_kakao } = require('./modules/kakao-api');
 const { translation_naver } = require('./modules/naver-trans');
 const { translation_google } = require('./modules/google-trans');
 const { help_text, cmd_list_text } = require('./modules/help-text');
+const { pool, sqlErr } = require('./modules/mysql-conn');
 
 const app = express();
 // const router = express.Router();
@@ -69,6 +70,9 @@ io.sockets.on('connection', function (socket) {
     // console.log('==conunt==');
     // console.log(io.engine.clientsCount);
     // console.log(Object.keys(io.sockets.connected).length);
+
+    let data = { cmd: 'rtcServers', rtcServers: iceServers };
+    socket.emit('webrtc', data);
 
     if (!socketids.includes(socket.id)) socketids.push(socket.id);
     console.log('==client array=');
@@ -187,6 +191,52 @@ io.sockets.on('connection', function (socket) {
         socket.to(packet.to).emit('webrtc', data);
     }); // end of socket.on('webrtc')
 });
+
+
+// webrtc iceServers
+let iceServers = [];
+async function getIceServers() {
+    let sql = "SELECT * FROM servers";
+    const connect = await pool.getConnection();
+    const result = (await connect.query(sql))[0];
+    connect.release();
+
+    let stuns = [];
+    let turns = [];
+    result.forEach(v => {
+        let type = v.url.substring(0, 4);
+        if (type == 'stun') {
+            stuns.push(v.url);
+        } else {
+            turns.push({
+                urls: v.url,
+                username: v.username,
+                credential: v.credential
+            });
+        }
+    });
+    iceServers.push({ urls: stuns });
+    iceServers = iceServers.concat(turns);
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/RTCIceServer
+    // iceServers = [
+    //     {
+    //         // turn server list
+    //         // https://gist.github.com/sagivo/3a4b2f2c7ac6e1b5267c2f1f59ac6c6b
+    //         // Trickle ICE
+    //         // https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
+    //         // Using five or more STUN/TURN servers causes problems
+    //         urls: "stun:stun.l.google.com:19302"
+    //     }
+    //     , {
+    //         urls: 'turn:numb.viagenie.ca',
+    //         credential: 'muazkh', username: 'webrtc@live.com'
+    //     }
+    // ];
+}
+
+getIceServers();
+
 
 let translation_machine = translation_kakao;
 
