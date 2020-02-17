@@ -91,17 +91,12 @@ async function createPeerConnection() {
                 // Trickle ICE
                 // https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
 
+                // Using five or more STUN/TURN servers causes problems
+                // from apprtc
                 urls: [
-                    "stun:stun.l.google.com:19302",
-                    "stun:stun1.l.google.com:19302",
-                    "stun:stun2.l.google.com:19302",
-                    "stun:stun3.l.google.com:19302",
-                    "stun:stun4.l.google.com:19302",
-                    "stun:stun.callwithus.com",
-                    "stun:stun.counterpath.net",
-                    "stun:stun.sipgate.net",
-                    "stun:stun.stunprotocol.org",
-                    "stun:stun.internetcalls.com"
+                    "stun:74.125.23.127:19302",
+                    "stun:[2404:6800:4008:c02::7f]:19302",
+                    "stun:stun.l.google.com:19302"
                 ]
             }
             // , {
@@ -109,8 +104,19 @@ async function createPeerConnection() {
             //     credential: 'muazkh',
             //     username: 'webrtc@live.com'
             // }
+            , {
+                urls: [
+                    "turn:74.125.23.127:19305?transport=udp",
+                    "turn:[2404:6800:4008:c02::7f]:19305?transport=udp",
+                    "turn:74.125.23.127:19305?transport=tcp",
+                    "turn:[2404:6800:4008:c02::7f]:19305?transport=tcp"
+                ],
+                username: "CIGYrvIFEgbr99K+2P4Yzc/s6OMTIICjBQ",
+                credential: "AOWLKqz+lcTJShJjxCkCq1l9648=",
+            }
         ]
     }
+
     peerConnection = new RTCPeerConnection(configuration);
     // peerConnection = new RTCPeerConnection();
 
