@@ -1,9 +1,13 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const messageSchema = new Schema({
+    room: {
+        type: String,
+        required: true
+    },
     writer: {
         type: String,
-        required: true,
+        required: true
     },
     message: {
         type: String,

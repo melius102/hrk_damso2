@@ -38,20 +38,11 @@ function connectToServer() {
         addUserList(true, mysock.id, sys_color);
 
         if (roomNo) { // room: group chatting
-            mysock.emit('room', {
-                cmd: 'join',
-                room_no: roomNo
-            });
+            mysock.emit('room', { cmd: 'join', room_no: roomNo });
         } else { // lobby
             mysock.emit('message', {
                 id: mysock.id,
-                msg: {
-                    trans: {
-                        flag: false
-                    },
-                    src: "join"
-                },
-                sys: true
+                msg: { trans: { flag: false }, src: "join" }, sys: true
             });
         }
     });
@@ -65,35 +56,11 @@ function connectToServer() {
     //     sys: true
     // }
     mysock.on('message', function (packet) {
+        addUserListFromPacket(packet);
         if (packet.room_no && roomNo) { // group chat
-            printRoomMsg();
+            printRoomMsg(packet);
         } else if (!(packet.room_no || roomNo)) { // lobby
-            printRoomMsg();
-        }
-
-        function printRoomMsg() {
-            if (packet.sys) { // system message
-                if (packet.msg.src == "join") {
-                    console.log("enter: ", packet.id);
-                    addUserList(true, packet.id);
-                    let id = packet.id;
-                    packet.msg.src += ": ";
-                    printMsgHbs(sys_color, packet.msg, "sysm", scMap.get(id).color, id.substring(0, 5));
-                } else if (packet.msg.src == "leave") {
-                    let id = packet.id;
-                    packet.msg.src += ": ";
-                    printMsgHbs(sys_color, packet.msg, "sysm", scMap.get(id) ? scMap.get(id).color : sys_color, id.substring(0, 5));
-                    console.log("leave: ", packet.id);
-                    addUserList(false, packet.id);
-                }
-            } else if (packet.id && packet.msg.src != "") { // user message
-                addUserList(true, packet.id);
-                if (packet.id == mysock.id) printMsgHbs(scMap.get(packet.id).color, packet.msg, "mine", [255, 165, 0]);
-                else {
-                    printMsgHbs(scMap.get(packet.id).color, packet.msg, "ours", scMap.get(packet.id).color);
-                }
-                console.log('message_packet: ', packet);
-            }
+            printRoomMsg(packet);
         }
     });
 
@@ -104,6 +71,12 @@ function connectToServer() {
         } else if (packet.cmd == 'userList') {
             let userList = packet.userList;
             userList.forEach(v => { addUserList(true, v); });
+        } else if (packet.cmd == 'messages') {
+            // console.log(packet.messages);
+            packet.messages.forEach(v => {
+                let msg = { trans: {}, src: v.message };
+                printMsgHbs(sys_color, msg, "ours", sys_color);
+            });
         }
     });
 
@@ -173,24 +146,53 @@ function connectToServer() {
 function disconnect_socket() {
     if (mysock && mysock.connected) {
         if (roomNo) {
-            mysock.emit('room', {
-                cmd: 'leave',
-                room_no: roomNo
-            });
+            mysock.emit('room', { cmd: 'leave', room_no: roomNo });
         } else { // lobby
             let packet = {
                 id: mysock.id,
-                msg: {
-                    trans: {
-                        flag: false
-                    },
-                    src: "leave"
-                },
+                msg: { trans: { flag: false }, src: "leave" },
                 sys: true
             };
             mysock.emit('message', packet);
         }
         mysock.disconnect();
+    }
+}
+
+function printRoomMsg(packet) {
+    if (packet.sys) { // system message
+        if (packet.msg.src == "join") {
+            console.log("enter: ", packet.id);
+            // addUserList(true, packet.id);
+            let id = packet.id;
+            packet.msg.src += ": ";
+            printMsgHbs(sys_color, packet.msg, "sysm", scMap.get(id).color, id.substring(0, 5));
+        } else if (packet.msg.src == "leave") {
+            let id = packet.id;
+            packet.msg.src += ": ";
+            printMsgHbs(sys_color, packet.msg, "sysm", scMap.get(id) ? scMap.get(id).color : sys_color, id.substring(0, 5));
+            console.log("leave: ", packet.id);
+            // addUserList(false, packet.id);
+        }
+    } else if (packet.id && packet.msg.src != "") { // user message
+        // addUserList(true, packet.id);
+        if (packet.id == mysock.id) printMsgHbs(scMap.get(packet.id).color, packet.msg, "mine", [255, 165, 0]);
+        else {
+            printMsgHbs(scMap.get(packet.id).color, packet.msg, "ours", scMap.get(packet.id).color);
+        }
+        console.log('message_packet: ', packet);
+    }
+}
+
+function addUserListFromPacket(packet) {
+    if (packet.sys) { // system message
+        if (packet.msg.src == "join") {
+            addUserList(true, packet.id);
+        } else if (packet.msg.src == "leave") {
+            addUserList(false, packet.id);
+        }
+    } else if (packet.id && packet.msg.src != "") { // user message
+        addUserList(true, packet.id);
     }
 }
 

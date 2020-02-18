@@ -65,6 +65,7 @@ if (process.env.PORT) {
 ////////////
 // socket.io
 let socketids = [];
+let recRooms = ["dsdev", "developer"];
 const io = socketio.listen(server);
 io.sockets.on('connection', function (socket) {
     console.log('connection');
@@ -107,7 +108,7 @@ io.sockets.on('connection', function (socket) {
     //     cmd: 'join',
     //     room_no: "123"
     // }
-    socket.on('room', function (packet) {
+    socket.on('room', async function (packet) {
         let send_packet = {
             id: socket.id,
             room_no: packet.room_no,
@@ -128,6 +129,11 @@ io.sockets.on('connection', function (socket) {
             if (packet.room_no) {
                 let userList = Object.keys(io.sockets.adapter.rooms[packet.room_no].sockets);
                 socket.emit('room', { cmd: 'userList', userList });
+
+                if (recRooms.includes(packet.room_no)) {
+                    let messages = await getMessages(packet.room_no);
+                    socket.emit('room', { cmd: 'messages', messages });
+                }
             }
         } else if (packet.cmd == 'userList') {
             let userList = Object.keys(io.sockets.adapter.rooms[packet.room_no].sockets);
@@ -157,8 +163,8 @@ io.sockets.on('connection', function (socket) {
             packet.msg.src = textareaCMDParser(packet.msg.src.substring(4));
             socket.emit('message', packet);
         } else {
-            if (packet.room_no == "developer") {
-                addMessage(socket.id, packet.msg.src);
+            if (recRooms.includes(packet.room_no)) {
+                addMessage(packet.room_no, socket.id, packet.msg.src);
             }
             if (packet.msg.trans.flag) {
                 translation_machine(packet.msg.trans.src, packet.msg.trans.target, packet.msg.src, function (res_text) {
@@ -202,13 +208,20 @@ io.sockets.on('connection', function (socket) {
 });
 
 // mongoose add record
-function addMessage(writer, msg) {
+function addMessage(room, writer, msg) {
     if (typeof msg == 'string') {
         msg = msg.substring(0, 1000);
-        const message = new Message({ writer, message: msg });
+        const message = new Message({ room, writer, message: msg });
         message.save().then(result => console.log(result))
             .catch(err => console.error(err));
     }
+}
+
+async function getMessages(room) {
+    let messages = [];
+    let records = await Message.find({ room }).sort({ createdAt: 'asc' }); // asc, desc
+    records.forEach(v => messages.push({ writer: v.writer, message: v.message }));
+    return messages;
 }
 
 // webrtc iceServers
