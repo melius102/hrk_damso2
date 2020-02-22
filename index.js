@@ -14,6 +14,7 @@ const { pool, sqlErr } = require('./modules/mysql-conn');
 // mongoose
 const connect = require('./schemas');
 const Message = require('./schemas/message');
+const ApprServer = require('./schemas/apprserver');
 
 const app = express();
 connect();
@@ -227,10 +228,15 @@ async function getMessages(room) {
 // webrtc iceServers
 let iceServers = [];
 async function getIceServers() {
+    /*
     let sql = "SELECT * FROM servers";
     const connect = await pool.getConnection();
     const result = (await connect.query(sql))[0];
     connect.release();
+    */
+
+    let result = await ApprServer.find();
+    // console.log(result);
 
     let stuns = [];
     let turns = [];
